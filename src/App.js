@@ -1,5 +1,6 @@
 import Grid from './components/Grid';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -13,10 +14,9 @@ function App() {
         <Grid />
         <Grid />
         <Grid />
+        <Footer />
       </div>
-    </div>
-
-      
+    </div>      
   );
 }
 
