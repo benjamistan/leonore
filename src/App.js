@@ -1,4 +1,3 @@
-import PrintTemplate from 'react-print';
 import Grid from './components/Grid';
 import Header from './components/Header';
 
