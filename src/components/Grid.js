@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 
 class Grid extends Component {
+    getRandomNumber() {
+        const res = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+        return res;
+    }
+    
     getAddingSum() {
-        const rndNum = () => Math.floor(Math.random() * (10 - 1 + 1) + 1);
-        return `${rndNum()} + ${rndNum()} = `;
+        return `${this.getRandomNumber()} + ${this.getRandomNumber()}  = `;
     }
 
     getSubtractingSum() {
-        const a = Math.floor(Math.random() * (10 - 0 + 1) + 0);
-        const b = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+        const a = this.getRandomNumber();
+        const b = this.getRandomNumber();
+
         if(a >= b) {
-            return `${a} - ${b} =`;
+            return `${a} - ${b}  =`;
         } else {
-            return `${b} - ${a} = `;
+            return `${b} - ${a}  = `;
         }
     }
 
@@ -27,7 +32,7 @@ class Grid extends Component {
     
     render() {
         return (
-            <div className='ui grid' style={{fontWeight: "bold", fontSize: "2em"}}>
+            <div className='ui grid' style={{fontWeight: "bold", fontSize: "1.5em"}}>
                 <div className='row' style={{padding: "40px"}}>
                     <div class="four wide column">{this.getRandomSum()}</div>
                     <div class="four wide column">{this.getRandomSum()}</div>
