@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import correct from '../assets/correct.png';
+import incorrect from '../assets/incorrect.png';
+import not_set from '../assets/not_set.png';
 
 function Sum() {
-	const [firstNum, setFirstNum] = useState(getRnd());
-	const [secNum, setSecNum] = useState(getRnd());
+	const [firstNum, setFirstNum] = useState(getRandomInt());
+	const [secNum, setSecNum] = useState(getRandomInt());
 	const answer = firstNum + secNum;
+	const [isAnswerCorrect, setIsAnswerCorrect] = useState({
+		image: not_set,
+	});
 	const [userAnswer, setUserAnswer] = useState('');
 
-	function getRnd() {
+	function getRandomInt() {
 		return Math.floor(Math.random() * (10 - 0 + 1) + 0);
 	}
 
@@ -16,30 +22,59 @@ function Sum() {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
+
 		userAnswer === answer.toString()
-			? console.log('correct!')
-			: console.log('incorrect');
-		setFirstNum(getRnd());
-		setSecNum(getRnd());
+			? setIsAnswerCorrect({ image: correct })
+			: setIsAnswerCorrect({ image: incorrect });
+	};
+
+	const nextSum = (e) => {
+		e.preventDefault();
+
+		setIsAnswerCorrect({ image: not_set });
+		setFirstNum(getRandomInt());
+		setSecNum(getRandomInt());
 		setUserAnswer('');
 	};
 
 	return (
-		<form onSubmit={onSubmit}>
-			<div className='ui input'>
-				{firstNum} + {secNum} =
-				<input
-					type='text'
-					value={userAnswer}
-					onChange={onUserInputChange}
-					style={{ width: '3.5em', height: '1em' }}
-				/>
-			</div>
-			<div>
-				<br />
-				<button className='ui purple button'>Check Answer</button>
-			</div>
-		</form>
+		<div className='ui raised center aligned segment'>
+			<form onSubmit={onSubmit}>
+				<div className='main'>
+					<span className='sum'>
+						{firstNum} + {secNum} = &nbsp;
+					</span>
+					<span className='ui input'>
+						<input
+							className='answer'
+							type='text'
+							value={userAnswer}
+							onChange={onUserInputChange}
+						/>
+					</span>
+					<span>
+						<img
+							className='answer_img'
+							src={isAnswerCorrect.image}
+							alt=' is this correct?'
+						/>
+					</span>
+				</div>
+				<div>
+					<br />
+					<button type='submit' className='ui purple button'>
+						Check Answer
+					</button>
+					{isAnswerCorrect.image === correct ? (
+						<button className='ui purple button' onClick={nextSum}>
+							Next
+						</button>
+					) : (
+						''
+					)}
+				</div>
+			</form>
+		</div>
 	);
 }
 
