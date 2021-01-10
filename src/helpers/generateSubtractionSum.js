@@ -3,6 +3,7 @@ function generateSubtractionSum() {
 	const sum = {
 		firstNumber: Math.floor(Math.random() * (10 - 0 + 1) + 0),
 		secondNumber: Math.floor(Math.random() * (10 - 0 + 1) + 0),
+		sign: '-',
 		answer: null,
 	};
 

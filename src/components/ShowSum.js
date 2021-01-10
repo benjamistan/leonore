@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
+import generateSubtractionSum from '../helpers/generateSubtractionSum';
+import generateAdditionSum from '../helpers/generateAdditionSum';
 import correct from '../assets/correct.png';
 import incorrect from '../assets/incorrect.png';
 import not_set from '../assets/not_set.png';
 
-function Sum() {
-	const [firstNum, setFirstNum] = useState(getRandomInt());
-	const [secNum, setSecNum] = useState(getRandomInt());
-	const answer = firstNum + secNum;
+function SubtractSum() {
+	const [sum, setSum] = useState(generateAdditionSum());
+
 	const [isAnswerCorrect, setIsAnswerCorrect] = useState({
 		image: not_set,
 	});
 	const [userAnswer, setUserAnswer] = useState('');
 
-	function getRandomInt() {
-		return Math.floor(Math.random() * (10 - 0 + 1) + 0);
-	}
+	const getNewSum = () => {
+		const shouldChooseAddOrSubtract = Math.random() < 0.5;
+		return shouldChooseAddOrSubtract
+			? generateAdditionSum
+			: generateSubtractionSum;
+	};
 
 	const onUserInputChange = (e) => {
 		setUserAnswer(e.target.value);
@@ -23,7 +27,7 @@ function Sum() {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		userAnswer === answer.toString()
+		userAnswer === sum.answer.toString()
 			? setIsAnswerCorrect({ image: correct })
 			: setIsAnswerCorrect({ image: incorrect });
 	};
@@ -32,8 +36,7 @@ function Sum() {
 		e.preventDefault();
 
 		setIsAnswerCorrect({ image: not_set });
-		setFirstNum(getRandomInt());
-		setSecNum(getRandomInt());
+		setSum(getNewSum());
 		setUserAnswer('');
 	};
 
@@ -42,7 +45,7 @@ function Sum() {
 			<form onSubmit={onSubmit}>
 				<div className='main'>
 					<span className='sum'>
-						{firstNum} + {secNum} = &nbsp;
+						{sum.firstNumber} {sum.sign} {sum.secondNumber} = &nbsp;
 					</span>
 					<span className='ui input'>
 						<input
@@ -78,4 +81,4 @@ function Sum() {
 	);
 }
 
-export default Sum;
+export default SubtractSum;
